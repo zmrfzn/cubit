@@ -13,7 +13,7 @@ def getDetail(trip_id,current_state):
 	while (current_state=="RUNNING"):
 		trip_detail = json.load(urlopen("http://cubito.co.in/assignment/gpslocation.php?trip_id="+trip_id))
 		print trip_detail["status"]+":"+trip_detail["trip_id"]
-		#count=count+1
+		#Fail Safe
 		if trip_detail["status"] == "COMPLETED":
 			current_state="COMPLETED"
 			break
@@ -24,11 +24,7 @@ def getDetail(trip_id,current_state):
 def getTripData():
 	flag=1
 	for id in range(2):
-		trip_ids.append(json.load(urlopen("http://cubito.co.in/assignment/gpslocation.php")))
-	print trip_ids
-
-	#tid = [{'trip_id':'G-1468691870-00'},{'trip_id':'K-1468692622-12'}]
-	for trip_id in trip_ids:
+		trip_id = json.load(urlopen("http://cubito.co.in/assignment/gpslocation.php"))
 		current_state = "RUNNING"
 		print str(trip_id["trip_id"])+"START"
 		dummy = json.load(urlopen("http://cubito.co.in/assignment/gpslocation.php?trip_id="+trip_id["trip_id"]))
@@ -36,6 +32,5 @@ def getTripData():
 		getDetail(trip_id["trip_id"],current_state)
 		print str(trip_id["trip_id"])+"STOP"
 		
-		#print trip_id["trip_id"]
 
 getTripData()
